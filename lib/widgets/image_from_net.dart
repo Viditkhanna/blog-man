@@ -20,13 +20,5 @@ class ImageFromNet extends StatelessWidget {
         return CircularProgressIndicator();
       },
     );
-    return Image.network(
-      imageUrl,
-      cacheHeight: 1000,
-      cacheWidth: 1000,
-      loadingBuilder: (context, child, imageChunk) =>
-          CircularProgressIndicator(),
-      errorBuilder: (context, err, stackTrace) => Icon(Icons.error),
-    );
   }
 }

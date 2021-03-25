@@ -10,6 +10,6 @@ class Prefs {
 
   static Future setToken(String tok) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(token, 'Token $tok');
+    return prefs.setString(token, 'Bearer $tok');
   }
 }

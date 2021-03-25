@@ -32,7 +32,7 @@ dependencies:
   pretty_dio_logger:
   regexpattern: ^1.0.0
   shared_preferences:
-  flutter_progress_dialog: ^0.1.0
+  rounded_loading_button:
 
 
 dev_dependencies:

@@ -33,7 +33,7 @@ dependencies:
   regexpattern: ^1.0.0
   shared_preferences:
   rounded_loading_button:
-
+  intl:
 
 dev_dependencies:
   flutter_test:

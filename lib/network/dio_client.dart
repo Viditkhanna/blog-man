@@ -6,7 +6,7 @@ import 'api_client.dart';
 class DioClient implements ApiClient {
   Dio dio;
 
-  static const BaseUrl = '';
+  static const BaseUrl = 'https://60585b2ec3f49200173adcec.mockapi.io/api/v1';
 
   DioClient() {
     dio = Dio();

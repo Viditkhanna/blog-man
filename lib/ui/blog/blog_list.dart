@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeward/widgets/image_from_net.dart';
 import 'package:homeward/models/blog.dart';
 import 'package:homeward/repo/blog_repo.dart';
 import 'package:homeward/resources/strings.dart';
@@ -15,7 +16,7 @@ class BlogList extends StatefulWidget {
 }
 
 class _BlogListState extends State<BlogList> {
-  Future future;
+  Future<List<Blog>> future;
   final dateFormat = DateFormat('MMM-dd-yyyy');
 
   @override
@@ -43,7 +44,7 @@ class _BlogListState extends State<BlogList> {
             itemBuilder: (context, i) {
               final blog = snap.data[i];
               return ListTile(
-                leading: Image.network('${blog.imageUrl}'),
+                leading: ImageFromNet(imageUrl: blog.imageUrl),
                 title: Text('${blog.title}'),
                 subtitle: Text('${dateFormat.format(blog.createdAt)}'),
               );

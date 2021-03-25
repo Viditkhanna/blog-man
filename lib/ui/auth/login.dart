@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homeward/data/shared_prefs.dart';
 import 'package:homeward/repo/auth_repo.dart';
 import 'package:homeward/resources/strings.dart';
+import 'package:homeward/ui/blog/blog_list.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -49,9 +50,12 @@ class LoginPage extends StatelessWidget {
               widthFactor: 0.4,
               child: RoundedLoadingButton(
                 controller: loginBtnCtrl,
-                onPressed: () async {
-                  if (!formKey.currentState.validate()) return;
-                  await _login(context);
+                onPressed: () {
+                  if (!formKey.currentState.validate()) {
+                    loginBtnCtrl.stop();
+                    return;
+                  }
+                  _login(context);
                 },
                 child: Text(Strings.login),
               ),
@@ -66,6 +70,8 @@ class LoginPage extends StatelessWidget {
     try {
       var response = await AuthRepo.login(emailCtrl.text, pwdCtrl.text);
       await Prefs.setToken(response['token']);
+      BlogList.open(context);
+      return;
     } catch (e) {
       _showErrorDialog(context, e);
     }

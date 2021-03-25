@@ -7,5 +7,6 @@ class AuthRepo {
       'email': email,
       'password': password,
     });
+    return response;
   }
 }

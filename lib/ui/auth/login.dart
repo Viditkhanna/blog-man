@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_progress_dialog/flutter_progress_dialog.dart';
 import 'package:homeward/data/shared_prefs.dart';
 import 'package:homeward/repo/auth_repo.dart';
 import 'package:homeward/resources/strings.dart';
 import 'package:regexpattern/regexpattern.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginPage extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
 
   final emailCtrl = TextEditingController();
   final pwdCtrl = TextEditingController();
+  final loginBtnCtrl = RoundedLoadingButtonController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +44,17 @@ class LoginPage extends StatelessWidget {
                 decoration: InputDecoration(labelText: Strings.password),
               ),
             ),
-            RaisedButton(
-              onPressed: () async {
-                if (!formKey.currentState.validate()) return;
-                _login(context);
-              },
-              child: Text(Strings.login),
+            SizedBox(height: 12),
+            FractionallySizedBox(
+              widthFactor: 0.4,
+              child: RoundedLoadingButton(
+                controller: loginBtnCtrl,
+                onPressed: () async {
+                  if (!formKey.currentState.validate()) return;
+                  await _login(context);
+                },
+                child: Text(Strings.login),
+              ),
             )
           ],
         ),
@@ -57,9 +63,29 @@ class LoginPage extends StatelessWidget {
   }
 
   Future _login(BuildContext context) async {
-    showProgressDialog(context: context, loadingText: '');
-    var response = await AuthRepo.login(emailCtrl.text, pwdCtrl.text);
-    await Prefs.setToken(response['token']);
-    dismissProgressDialog();
+    try {
+      var response = await AuthRepo.login(emailCtrl.text, pwdCtrl.text);
+      await Prefs.setToken(response['token']);
+    } catch (e) {
+      _showErrorDialog(context, e);
+    }
+    loginBtnCtrl.stop();
+  }
+
+  void _showErrorDialog(BuildContext context, dynamic err) {
+    showDialog(
+        context: context,
+        builder: (_context) {
+          return AlertDialog(
+            title: Text(Strings.error),
+            content: Text('$err'),
+            actions: [
+              FlatButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(Strings.ok),
+              ),
+            ],
+          );
+        });
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:homeward/data/shared_prefs.dart';
+import 'package:homeward/repo/auth_repo.dart';
 import 'package:homeward/resources/strings.dart';
 import 'package:regexpattern/regexpattern.dart';
 
@@ -41,8 +43,9 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (!formKey.currentState.validate()) return;
+                _login();
               },
               child: Text(Strings.login),
             )
@@ -50,5 +53,10 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future _login() async {
+    var response = await AuthRepo.login(emailCtrl.text, pwdCtrl.text);
+    await Prefs.setToken(response['token']);
   }
 }

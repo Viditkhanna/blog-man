@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_progress_dialog/flutter_progress_dialog.dart';
 import 'package:homeward/data/shared_prefs.dart';
 import 'package:homeward/repo/auth_repo.dart';
 import 'package:homeward/resources/strings.dart';
@@ -45,7 +46,7 @@ class LoginPage extends StatelessWidget {
             RaisedButton(
               onPressed: () async {
                 if (!formKey.currentState.validate()) return;
-                _login();
+                _login(context);
               },
               child: Text(Strings.login),
             )
@@ -55,8 +56,10 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Future _login() async {
+  Future _login(BuildContext context) async {
+    showProgressDialog(context: context, loadingText: '');
     var response = await AuthRepo.login(emailCtrl.text, pwdCtrl.text);
     await Prefs.setToken(response['token']);
+    dismissProgressDialog();
   }
 }

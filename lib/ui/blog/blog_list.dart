@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homeward/ui/blog/blog_details.dart';
 import 'package:homeward/widgets/image_from_net.dart';
 import 'package:homeward/models/blog.dart';
 import 'package:homeward/repo/blog_repo.dart';
@@ -44,6 +45,9 @@ class _BlogListState extends State<BlogList> {
             itemBuilder: (context, i) {
               final blog = snap.data[i];
               return ListTile(
+                onTap: () {
+                  BlogDetailsScreen.open(context, blog.id);
+                },
                 leading: ImageFromNet(imageUrl: blog.imageUrl),
                 title: Text('${blog.title}'),
                 subtitle: Text('${dateFormat.format(blog.createdAt)}'),

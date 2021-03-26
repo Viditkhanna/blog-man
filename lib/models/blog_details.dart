@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-BlogDetails blogDetailsFromMap(String str) => BlogDetails.fromMap(json.decode(str));
+BlogDetails blogDetailsFromMap(String str) =>
+    BlogDetails.fromMap(json.decode(str));
 
 String blogDetailsToMap(BlogDetails data) => json.encode(data.toMap());
 
@@ -22,16 +23,16 @@ class BlogDetails {
   final String imageUrl;
 
   factory BlogDetails.fromMap(Map<String, dynamic> json) => BlogDetails(
-    id: json["id"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    title: json["title"],
-    imageUrl: json["imageUrl"],
-  );
+        id: json["id"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        title: json["title"],
+        imageUrl: json["imageUrl"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "id": id,
-    "createdAt": createdAt.toIso8601String(),
-    "title": title,
-    "imageUrl": imageUrl,
-  };
+        "id": id,
+        "createdAt": createdAt.toIso8601String(),
+        "title": title,
+        "imageUrl": imageUrl,
+      };
 }

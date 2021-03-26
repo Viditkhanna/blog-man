@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:homeward/data/shared_prefs.dart';
+import 'package:homeward/resources/strings.dart';
 import 'package:homeward/ui/auth/login.dart';
 
 class ErrorHandling {
@@ -19,21 +20,21 @@ class ErrorHandling {
             } else if (error.response.statusCode == 401) {
               Future.delayed(Duration(seconds: 1))
                   .then((value) => _showTokenExpiredDialog(context));
-              return 'Token Expired';
+              return Strings.tokenExpiredError;
             } else if (error.response.statusCode == 404) {
-              return 'Page Not Found';
+              return Strings.pageNotFoundError;
             }
             return error.message;
           case DioErrorType.DEFAULT:
-            return 'Unable to connect to network!';
+            return Strings.noInternetError;
           default:
             return error.message;
         }
       }
     } catch (e) {
-      return 'Unknown error!';
+      return Strings.unknownError;
     }
-    return error?.toString() ?? 'Unknown error!';
+    return error?.toString() ?? Strings.unknownError;
   }
 
   static void _showTokenExpiredDialog(context) {
@@ -44,7 +45,7 @@ class ErrorHandling {
         return WillPopScope(
           onWillPop: () {},
           child: AlertDialog(
-            content: Text('Your token has expired. Please login again.'),
+            content: Text(Strings.tokenExpiredErrorAlert),
             actions: <Widget>[
               FlatButton(
                 onPressed: () async {
@@ -52,7 +53,7 @@ class ErrorHandling {
                   LoginPage.openAndRemoveUntil(context);
                 },
                 child: Text(
-                  'OK',
+                  Strings.ok,
                   style: TextStyle(color: Colors.green),
                 ),
               ),

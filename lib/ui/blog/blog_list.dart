@@ -48,7 +48,10 @@ class _BlogListState extends State<BlogList> {
                 onTap: () {
                   BlogDetailsScreen.open(context, blog.id);
                 },
-                leading: ImageFromNet(imageUrl: blog.imageUrl),
+                leading: AspectRatio(
+                  aspectRatio: 1,
+                  child: ImageFromNet(imageUrl: blog.imageUrl),
+                ),
                 title: Text('${blog.title}'),
                 subtitle: Text('${dateFormat.format(blog.createdAt)}'),
               );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeward/models/blog_details.dart';
 import 'package:homeward/repo/blog_repo.dart';
+import 'package:homeward/resources/strings.dart';
 import 'package:homeward/widgets/custom_error_widget.dart';
 import 'package:homeward/widgets/image_from_net.dart';
 import 'package:intl/intl.dart';
@@ -23,7 +24,7 @@ class BlogDetailsScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Blog Details'),
+        title: Text(Strings.blogDetails),
       ),
       body: FutureBuilder<BlogDetails>(
           future: BlogRepo.getBlogDetails(id),

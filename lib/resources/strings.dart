@@ -5,6 +5,7 @@ class Strings {
   static const error = 'Error';
   static const ok = 'Ok';
   static const blogs = 'Blogs';
+  static const blogDetails = 'Blog Details';
   static const invalidEmailAlert = 'Please enter a valid email';
   static const invalidPasswordAlert =
       'Please enter a password with more than 5 characters';

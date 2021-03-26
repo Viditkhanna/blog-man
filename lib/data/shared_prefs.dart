@@ -12,4 +12,9 @@ class Prefs {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString(token, 'Bearer $tok');
   }
+
+  static Future clearPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.clear();
+  }
 }

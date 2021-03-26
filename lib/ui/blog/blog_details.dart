@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homeward/models/blog_details.dart';
 import 'package:homeward/repo/blog_repo.dart';
+import 'package:homeward/widgets/custom_error_widget.dart';
 import 'package:homeward/widgets/image_from_net.dart';
 import 'package:intl/intl.dart';
 
@@ -27,12 +28,13 @@ class BlogDetailsScreen extends StatelessWidget {
       body: FutureBuilder<BlogDetails>(
           future: BlogRepo.getBlogDetails(id),
           builder: (context, snap) {
-            if (!snap.hasData)
-              return Center(child: CircularProgressIndicator());
             if (snap.hasError)
               return Center(
-                child: Text("${snap.error}"),
+                child: CustomErrorWidget(snap.error),
               );
+            if (!snap.hasData)
+              return Center(child: CircularProgressIndicator());
+
             final blog = snap.data;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,

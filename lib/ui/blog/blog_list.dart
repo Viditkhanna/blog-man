@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homeward/ui/blog/blog_details.dart';
+import 'package:homeward/widgets/custom_error_widget.dart';
 import 'package:homeward/widgets/image_from_net.dart';
 import 'package:homeward/models/blog.dart';
 import 'package:homeward/repo/blog_repo.dart';
@@ -35,11 +36,12 @@ class _BlogListState extends State<BlogList> {
       body: FutureBuilder<List<Blog>>(
         future: future,
         builder: (context, snap) {
-          if (!snap.hasData) return Center(child: CircularProgressIndicator());
           if (snap.hasError)
             return Center(
-              child: Text("${snap.error}"),
+              child: CustomErrorWidget(snap.error),
             );
+          if (!snap.hasData) return Center(child: CircularProgressIndicator());
+
           return ListView.builder(
             itemCount: snap.data.length,
             itemBuilder: (context, i) {

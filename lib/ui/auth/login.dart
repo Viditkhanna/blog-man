@@ -3,6 +3,7 @@ import 'package:homeward/data/shared_prefs.dart';
 import 'package:homeward/repo/auth_repo.dart';
 import 'package:homeward/resources/strings.dart';
 import 'package:homeward/ui/blog/blog_list.dart';
+import 'package:homeward/utils/error_handling.dart';
 import 'package:regexpattern/regexpattern.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -12,6 +13,9 @@ class LoginPage extends StatelessWidget {
   final emailCtrl = TextEditingController();
   final pwdCtrl = TextEditingController();
   final loginBtnCtrl = RoundedLoadingButtonController();
+
+  static openAndRemoveUntil(context) => Navigator.pushAndRemoveUntil(context,
+      MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +88,7 @@ class LoginPage extends StatelessWidget {
         builder: (_context) {
           return AlertDialog(
             title: Text(Strings.error),
-            content: Text('$err'),
+            content: Text('${ErrorHandling.parseError(context, err)}'),
             actions: [
               FlatButton(
                 onPressed: () => Navigator.pop(context),

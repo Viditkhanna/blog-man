@@ -43,7 +43,9 @@ class ErrorHandling {
       barrierDismissible: false,
       builder: (context) {
         return WillPopScope(
-          onWillPop: () {},
+          onWillPop: () {
+            return Future.value(false);
+          },
           child: AlertDialog(
             content: Text(Strings.tokenExpiredErrorAlert),
             actions: <Widget>[
